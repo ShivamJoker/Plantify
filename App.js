@@ -1,12 +1,9 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import {Button} from 'react-native-elements';
-import FindLocalDevice from './components/FindLocalDevice';
-import NetworkInfo from './components/NetworkInfo';
-import './components/LocalStorage'
-import PlantsPage from './components/PlantsPage'
-import Notifications from './components/Notifications'
+import './components/LocalStorage';
+import PlantsPage from './components/PlantsPage';
+import Notifications from './components/Notifications';
 const Spinner = require('react-native-spinkit');
-
 
 import {
   ActivityIndicator,
@@ -18,24 +15,28 @@ import {
   AsyncStorage,
 } from 'react-native';
 import NotifPanel from './components/NotifiPanel';
-
-
+import CatLooking from './components/CatLooking';
+import SplashScreen from 'react-native-splash-screen';
+import { greenColor } from './components/myColors';
 
 const App = () => {
   const [searchState, setSearchState] = useState('');
 
-
+  useEffect(() => {
+      SplashScreen.hide();
+  }, []);
 
   return (
     <View style={styles.container}>
       <PlantsPage/>
+      {/* <CatLooking /> */}
 
       {/* <Notifications/> */}
       {/* <NetworkInfo /> */}
-      {/* <StatusBar backgroundColor="#4caf50" barStyle="light-content" />
-      <FindLocalDevice setSearchState={setSearchState} />
-      <Spinner color="#fff" type="Bounce" size={80} />
-      <Text style={styles.statusIndicator}>{searchState}</Text> */}
+      <StatusBar backgroundColor={"#00600f"} barStyle="light-content" />
+      {/* <FindLocalDevice setSearchState={setSearchState} />
+      <Spinner color="#fff" type="Bounce" size={80} /> */}
+      {/* <Text style={styles.statusIndicator}>{searchState}</Text> */}
     </View>
   );
 };

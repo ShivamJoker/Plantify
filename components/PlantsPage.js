@@ -5,6 +5,8 @@ import TimePicker from './TimePicker';
 import SettingsPage from './SettingsPage';
 import {plantsDetail} from './ServerResponses';
 import FloatingBtn from './FloatingBtn';
+import { Header } from 'react-native-elements';
+import { greenColor } from './myColors';
 
 
 const defaultPlant = {
@@ -36,8 +38,6 @@ const PlantsPage = () => {
     setAllPlants(prv => {
       return [...prv, defaultPlant];
     });
-
-
   };
 
   return (
@@ -50,6 +50,13 @@ const PlantsPage = () => {
         settingsState={settingsState}
         setSettingsState={setSettingsState}
         setTimePickerState={setTimePickerState}
+      />
+      <Header
+        leftComponent={{icon: 'menu', color: '#fff'}}
+        centerComponent={{text: 'Plants Dashboard', style: {color: '#fff', fontSize: 22,}}}
+        backgroundColor={greenColor}
+        barStyle="light-content"
+        statusBarProps={{translucent: true}}
       />
       <ScrollView style={styles.container} ref={scrollRef}>
         {allPlants.map((data, index) => {
