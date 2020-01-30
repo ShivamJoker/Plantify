@@ -1,7 +1,8 @@
 import React, {useState, useEffect} from 'react';
-import {Button} from 'react-native-elements';
+import {Button, Header} from 'react-native-elements';
 import './components/LocalStorage';
-import PlantsPage from './components/PlantsPage';
+import 'react-native-gesture-handler';
+import PlantsPage from './components/Pages/PlantsPage';
 import Notifications from './components/Notifications';
 const Spinner = require('react-native-spinkit');
 
@@ -17,27 +18,38 @@ import {
 import NotifPanel from './components/NotifiPanel';
 import CatLooking from './components/CatLooking';
 import SplashScreen from 'react-native-splash-screen';
-import { greenColor } from './components/myColors';
+import {greenColor} from './components/myColors';
+import RouteHandler from './components/RouteHandler';
+
+import {DrawerActions} from '@react-navigation/routers';
+import {NavigationNativeContainer} from '@react-navigation/native';
+
+import {navigationRef} from './components/RootNavigation';
 
 const App = () => {
   const [searchState, setSearchState] = useState('');
 
   useEffect(() => {
-      SplashScreen.hide();
+    SplashScreen.hide();
   }, []);
 
-  return (
-    <View style={styles.container}>
-      <PlantsPage/>
-      {/* <CatLooking /> */}
 
-      {/* <Notifications/> */}
-      {/* <NetworkInfo /> */}
-      <StatusBar backgroundColor={"#00600f"} barStyle="light-content" />
-      {/* <FindLocalDevice setSearchState={setSearchState} />
-      <Spinner color="#fff" type="Bounce" size={80} /> */}
-      {/* <Text style={styles.statusIndicator}>{searchState}</Text> */}
-    </View>
+  return (
+    <NavigationNativeContainer ref={navigationRef}>
+      {/* <Header
+        leftComponent={{icon: 'menu', color: '#fff'}}
+        centerComponent={{
+          text: 'Plants Dashboard',
+          style: {color: '#fff', fontSize: 22},
+        }}
+        backgroundColor={greenColor}
+        barStyle="light-content"
+        statusBarProps={{translucent: true}}
+      /> */}
+      <RouteHandler />
+      <StatusBar backgroundColor={'#00600f'} barStyle="light-content" />
+      {/* <Spinner color="#fff" type="Bounce" size={80} /> */}
+    </NavigationNativeContainer>
   );
 };
 export default App;
@@ -45,7 +57,7 @@ export default App;
 var styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: 'center',
+    justifyContent: 'flex-start',
     alignItems: 'center',
     // backgroundColor: '#4caf50',
   },

@@ -15,19 +15,10 @@ import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import * as Animatable from 'react-native-animatable';
 import Interactable from 'react-native-interactable';
 import Snackbar from 'react-native-snackbar';
-import {greenColor, lightGreen} from './myColors';
+import {greenColor, lightGreen} from '../myColors';
+import formatAMPM from './formatTime'
 
-const formatAMPM = date => {
-  date = new Date(date);
-  var hours = date.getHours();
-  var minutes = date.getMinutes();
-  var ampm = hours >= 12 ? 'PM' : 'AM';
-  hours = hours % 12;
-  hours = hours ? hours : 12; // the hour '0' should be '12'
-  minutes = minutes < 10 ? '0' + minutes : minutes;
-  var strTime = hours + ':' + minutes + ' ' + ampm;
-  return strTime;
-};
+
 
 // enable flag for android layout animation
 if (Platform.OS === 'android') {
@@ -37,7 +28,7 @@ if (Platform.OS === 'android') {
 }
 
 // comoponent starts here
-const PlantContainer = ({setSettingsState, setTimePickerState, data}) => {
+const PlantContainer = ({setCurrentPlant, setTimePickerState, data, index}) => {
   const [containerStyle, setContainerStyle] = useState(null);
   const containerRef = useRef(null);
   const animatableRef = useRef(null);
@@ -79,11 +70,15 @@ const PlantContainer = ({setSettingsState, setTimePickerState, data}) => {
     }
   };
 
+
+
   return (
+    // we will use slide feature to delete the plant
+    // 
     <Interactable.View
       horizontalOnly={true}
       snapPoints={[
-        {x: width + 100, id: 'right'},
+        {x: width, id: 'right'},
         {x: 0, id: 'left'},
       ]}
       boundaries={{left: 0}}
@@ -109,7 +104,8 @@ const PlantContainer = ({setSettingsState, setTimePickerState, data}) => {
               {data.name}
             </Text>
             <TouchableOpacity
-              onPress={() => setSettingsState(data)}
+              onPress={()=>setCurrentPlant(index)}
+              // we will set the name of plant and then we will search for it
               style={{
                 position: 'absolute',
                 top: 0,

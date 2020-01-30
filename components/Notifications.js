@@ -1,9 +1,11 @@
 import OneSignal from 'react-native-onesignal'; // Import package from node modules
 import {useEffect} from 'react';
+import { ONESIGNAL_KEY } from "../env.js"
+//GET YOUR onesignal key and put it in env
 
 const Notification = () => {
   useEffect(() => {
-    OneSignal.init('f28209a1-5a1d-415b-8599-0fdae14805b8');
+    OneSignal.init(ONESIGNAL_KEY);
 
     OneSignal.addEventListener('received', onReceived);
     OneSignal.addEventListener('opened', onOpened);
