@@ -11,8 +11,6 @@ import reducer from './Reducer';
 
 const uuid = require('uuid');
 
-
-
 function init(initialCount) {
   return plantsDetail;
 }
@@ -22,7 +20,7 @@ const windowHeight = Dimensions.get('screen').height;
 const PlantsPage = () => {
   const [currentPlant, setCurrentPlant] = useState(null);
   const [timePickerState, setTimePickerState] = useState(null);
-  // we will store the clicked plant object 
+  // we will store the clicked plant object
   const [data, dispatch] = useReducer(reducer, plantsDetail, init);
   // we will store the clicked plant data in settings and time
 
@@ -36,22 +34,24 @@ const PlantsPage = () => {
     }, 1);
 
     const defaultPlant = {
-      name: 'Cool Plant',
+      name: `Plant ${data.length + 1}`,
       watering: true,
-      notifications: false,
+      notifications: true,
       moistureLevel: 350,
       time: 1578880448844,
       frequency: 1,
       sensorPin: 2,
       pumpPin: 16,
-      id: uuid.v4()
+      id: uuid.v4(),
     };
-    
-      dispatch({type: 'init', payload: [...data, defaultPlant]});
-  
+
+    dispatch({type: 'init', payload: [...data, defaultPlant]});
   };
 
-  // console.log(data[currentPlant])
+  useEffect(() => {
+    console.log(data);
+  }, data);
+
   return (
     <Fragment>
       <TimePicker
@@ -71,13 +71,15 @@ const PlantsPage = () => {
       )}
 
       <ScrollView style={styles.container} ref={scrollRef}>
-        {data.map((data, index) => {
+        {data.map((plant, index) => {
           return (
             <PlantContainer
-              data={data}
+              data={plant}
+              allPlants={data}
               setCurrentPlant={setCurrentPlant}
               setTimePickerState={setTimePickerState}
               key={index}
+              dispatch={dispatch}
               index={index}
             />
           );

@@ -26,11 +26,19 @@ if (Platform.OS === 'android') {
 }
 
 // comoponent starts here
-const PlantContainer = ({setCurrentPlant, setTimePickerState, data, index}) => {
+const PlantContainer = ({
+  setCurrentPlant,
+  setTimePickerState,
+  data,
+  allPlants,
+  index,
+  dispatch,
+}) => {
   const [containerStyle, setContainerStyle] = useState(null);
   const containerRef = useRef(null);
   const animatableRef = useRef(null);
 
+  // we will use width in swipe
   const width = Dimensions.get('screen').width;
 
   const returnFrequency = () => {
@@ -46,6 +54,15 @@ const PlantContainer = ({setCurrentPlant, setTimePickerState, data, index}) => {
     // get the id of snapping point
     // only trigger when user has swipped to left
     if (snapPointId === 'left') {
+      const timeout = setTimeout(() => {
+        // we will now delete the plant from server and reducer
+      }, 3000);
+
+      dispatch({
+        type: 'init',
+        payload: allPlants.filter(o => o.id === data.id),
+      });
+
       Snackbar.show({
         text: 'Plant Deleted',
         duration: Snackbar.LENGTH_LONG,
