@@ -22,6 +22,7 @@ const windowHeight = Dimensions.get('screen').height;
 const PlantsPage = () => {
   const [currentPlant, setCurrentPlant] = useState(null);
   const [timePickerState, setTimePickerState] = useState(null);
+  // we will store the clicked plant object 
   const [data, dispatch] = useReducer(reducer, plantsDetail, init);
   // we will store the clicked plant data in settings and time
 
@@ -50,16 +51,18 @@ const PlantsPage = () => {
   
   };
 
-  console.log(data[currentPlant])
+  // console.log(data[currentPlant])
   return (
     <Fragment>
       <TimePicker
         timePickerState={timePickerState}
         setTimePickerState={setTimePickerState}
+        dispatch={dispatch}
       />
       {data[currentPlant] && (
         <SettingsPage
           data={data[currentPlant]}
+          allPlant={data}
           dispatch={dispatch}
           setCurrentPlant={setCurrentPlant}
           currentPlant={currentPlant}

@@ -28,6 +28,7 @@ const SettingsPage = ({
   dispatch,
   setCurrentPlant,
   currentPlant,
+  allPlant,
   setTimePickerState,
 }) => {
   const [settingsVisibility, setSettingsVisibility] = useState(false);
@@ -53,7 +54,7 @@ const SettingsPage = ({
     if (currentPlant !== null) {
       // we will put all the data in our state which we will get from server
       setSettingsVisibility(true);
-      prvState.current = data
+      prvState.current = allPlant
     }
   }, [currentPlant]);
 
@@ -66,8 +67,9 @@ const SettingsPage = ({
   };
 
   const revertToPrvState = () => {
- 
-    dispatch({type: 'init', payload: {}});
+    dispatch({type: 'init', payload: prvState.current});
+    setSettingsVisibility(false);
+    setCurrentPlant(null);
   };
 
   return (
@@ -118,7 +120,7 @@ const SettingsPage = ({
           <View style={styles.spacedRow}>
             <Text style={styles.infoText}>Frequency</Text>
             <Text
-              onPress={() => setTimePickerState(settingsState)}
+              onPress={() => setTimePickerState(data)}
               style={StyleSheet.compose({color: greenColor}, styles.infoText)}>
               Edit
             </Text>

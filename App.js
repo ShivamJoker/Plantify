@@ -36,6 +36,7 @@ const App = () => {
 
   return (
     <NavigationNativeContainer ref={navigationRef}>
+      {/* <Notifications/> */}
       {/* <Header
         leftComponent={{icon: 'menu', color: '#fff'}}
         centerComponent={{

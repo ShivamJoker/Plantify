@@ -4,6 +4,8 @@ export const name = 'name';
 export const moistureLevel = 'moistureLevel';
 export const sensorPin = 'sensorPin';
 export const pumpPin = 'pumpPin';
+export const frequency = 'frequency';
+export const time = 'time';
 
 export default reducer = (state, action) => {
   switch (action.type) {
@@ -41,6 +43,18 @@ export default reducer = (state, action) => {
       return state.map(o => {
         if (o.id === action.payload.id)
           return {...o, pumpPin: action.payload.pumpPin};
+        return o;
+      });
+    case frequency:
+      return state.map(o => {
+        if (o.id === action.payload.id)
+          return {...o, frequency: action.payload.frequency};
+        return o;
+      });
+    case time:
+      return state.map(o => {
+        if (o.id === action.payload.id)
+          return {...o, time: action.payload.time};
         return o;
       });
     case 'init':

@@ -16,9 +16,7 @@ import * as Animatable from 'react-native-animatable';
 import Interactable from 'react-native-interactable';
 import Snackbar from 'react-native-snackbar';
 import {greenColor, lightGreen} from '../myColors';
-import formatAMPM from './formatTime'
-
-
+import formatAMPM from './formatTime';
 
 // enable flag for android layout animation
 if (Platform.OS === 'android') {
@@ -70,11 +68,9 @@ const PlantContainer = ({setCurrentPlant, setTimePickerState, data, index}) => {
     }
   };
 
-
-
   return (
     // we will use slide feature to delete the plant
-    // 
+    //
     <Interactable.View
       horizontalOnly={true}
       snapPoints={[
@@ -91,7 +87,6 @@ const PlantContainer = ({setCurrentPlant, setTimePickerState, data, index}) => {
         duration={270}>
         <LinearGradient
           colors={['#0f9b0f', greenColor]}
-          
           style={styles.plantNameContainer}>
           <View style={styles.plantNameInnerContainer}>
             <FontAwesome5
@@ -104,8 +99,9 @@ const PlantContainer = ({setCurrentPlant, setTimePickerState, data, index}) => {
               {data.name}
             </Text>
             <TouchableOpacity
-              onPress={()=>setCurrentPlant(index)}
+              onPress={() => setCurrentPlant(index)}
               // we will set the name of plant and then we will search for it
+
               style={{
                 position: 'absolute',
                 top: 0,

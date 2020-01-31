@@ -4,14 +4,16 @@ import {Overlay, Input, Text, Button} from 'react-native-elements';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 
 import RNDateTimePicker from '@react-native-community/datetimepicker';
-
+import {frequency, time} from './Pages/Reducer'
 import {greenColor} from './myColors';
 import SettingsPage from './SettingsPage';
 
-const TimePicker = ({timePickerState, setTimePickerState}) => {
+
+
+const TimePicker = ({timePickerState, setTimePickerState, dispatch}) => {
   const [dayPickerVisibility, setDayPickerVisibility] = useState(false);
   const [timePickerVisibility, setTimePickerVisibility] = useState(false);
-  const [time, setTime] = useState(new Date());
+  const [timeState, setTimeState] = useState(new Date());
 
   const [dayFrequency, setDayFrequency] = useState(1);
 
@@ -25,7 +27,7 @@ const TimePicker = ({timePickerState, setTimePickerState}) => {
       //we are also going to set the picker state to null if closed
       // setting date as undefined gives error
     } else {
-      setTime(date);
+      setTimeState(date);
       // we will show the day selector
       setDayPickerVisibility(true);
     }
@@ -33,11 +35,12 @@ const TimePicker = ({timePickerState, setTimePickerState}) => {
 
   useEffect(() => {
     if (timePickerState) {
-      setTime(timePickerState.time);
+      setTimeState(timePickerState.time);
       setTimePickerVisibility(true);
       setDayFrequency(timePickerState.frequency)
     }
   }, [timePickerState]);
+
 
   const changeDayFrequency = operation => {
     // we will pass +1 and -1
@@ -53,15 +56,27 @@ const TimePicker = ({timePickerState, setTimePickerState}) => {
     }
   };
 
+  // Save function
+
+  // update the settings to server
   const saveDayFrequency = bool => {
-    // if the value is true then we have to save it
+    // user has clickede on the save button
     setTimePickerState(null);
     setDayPickerVisibility(false);
+    dispatch({
+      type: time,
+      payload: {id: timePickerState.id, [time]: timeState},
+    });
+    dispatch({
+      type: frequency,
+      payload: {id: timePickerState.id, [frequency]: dayFrequency},
+    });
+
   };
   return (
     <Fragment>
       {timePickerVisibility && (
-        <RNDateTimePicker mode="time" value={time} onChange={setDate} />
+        <RNDateTimePicker mode="time" value={timeState} onChange={setDate} />
       )}
       <Overlay
         isVisible={dayPickerVisibility}
