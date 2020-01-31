@@ -44,8 +44,8 @@ const PlantContainer = ({setCurrentPlant, setTimePickerState, data, index}) => {
   const showUndoMsg = event => {
     const snapPointId = event.nativeEvent.id;
     // get the id of snapping point
-    // only trigger when user has swipped to right
-    if (snapPointId === 'right') {
+    // only trigger when user has swipped to left
+    if (snapPointId === 'left') {
       Snackbar.show({
         text: 'Plant Deleted',
         duration: Snackbar.LENGTH_LONG,
@@ -73,11 +73,12 @@ const PlantContainer = ({setCurrentPlant, setTimePickerState, data, index}) => {
     //
     <Interactable.View
       horizontalOnly={true}
+      // cordinates where component will snappppp
       snapPoints={[
-        {x: width, id: 'right'},
-        {x: 0, id: 'left'},
+        {x: -width, id: 'left'},
+        {x: 0, id: 'right'},
       ]}
-      boundaries={{left: 0}}
+      boundaries={{right: 0}}
       onSnap={showUndoMsg}
       ref={containerRef}>
       <Animatable.View
