@@ -8,8 +8,25 @@ import FloatingBtn from '../FloatingBtn';
 import {Header} from 'react-native-elements';
 import {greenColor} from '../myColors';
 import reducer from './Reducer';
+import './connection';
+import {sendMsg} from './connection';
 
 const uuid = require('uuid');
+
+import Snackbar from 'react-native-snackbar';
+
+const showPlantCreatedMsg = () =>
+  Snackbar.show({
+    text: 'Plant Created',
+    duration: Snackbar.LENGTH_LONG,
+    action: {
+      text: 'EDIT',
+      textColor: 'green',
+      onPress: () => {
+        
+      },
+    },
+  });
 
 function init(initialCount) {
   return plantsDetail;
@@ -33,12 +50,14 @@ const PlantsPage = () => {
       });
     }, 1);
 
+    showPlantCreatedMsg();
+
     const defaultPlant = {
       name: `Plant ${data.length + 1}`,
       watering: true,
       notifications: true,
       moistureLevel: 350,
-      time: 1578880448844,
+      time: 1578880448,
       frequency: 1,
       sensorPin: 2,
       pumpPin: 16,
@@ -49,8 +68,11 @@ const PlantsPage = () => {
   };
 
   useEffect(() => {
-    console.log(data);
-  }, data);
+    // addNewPlant()
+    if (data) {
+      sendMsg(data);
+    }
+  }, [data]);
 
   return (
     <Fragment>
@@ -69,8 +91,7 @@ const PlantsPage = () => {
           setTimePickerState={setTimePickerState}
         />
       )}
-
-      <ScrollView style={styles.container} ref={scrollRef}>
+      <ScrollView style={styles.container} ref={scrollRef} contentContainerStyle={{alignItems: "center"}}>
         {data.map((plant, index) => {
           return (
             <PlantContainer
@@ -78,7 +99,7 @@ const PlantsPage = () => {
               allPlants={data}
               setCurrentPlant={setCurrentPlant}
               setTimePickerState={setTimePickerState}
-              key={index}
+              key={plant.id}
               dispatch={dispatch}
               index={index}
             />
@@ -97,8 +118,8 @@ export default PlantsPage;
 const styles = StyleSheet.create({
   container: {
     //   flex: 1,
-    //   justifyContent: 'center',
-    //   alignItems: 'center',
+      // justifyContent: 'center',
+      // alignItems: 'center',
 
     width: '100%',
     // height: windowHeight - 88,

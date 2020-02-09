@@ -3,6 +3,7 @@ import {TouchableOpacity, Text, StyleSheet} from 'react-native';
 import Entypo from 'react-native-vector-icons/Entypo';
 import {greenColor, lightGreen} from './myColors';
 
+
 const FloatingBtn = ({addNewPlant}) => {
   return (
     <TouchableOpacity

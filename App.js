@@ -1,6 +1,7 @@
-import React, {useState, useEffect} from 'react';
+import {useState, useEffect} from 'react';
+import * as React from 'react';
 import {Button, Header} from 'react-native-elements';
-import './components/LocalStorage';
+// import './components/LocalStorage';
 import 'react-native-gesture-handler';
 import PlantsPage from './components/Pages/PlantsPage';
 import Notifications from './components/Notifications';
@@ -22,9 +23,9 @@ import {greenColor} from './components/myColors';
 import RouteHandler from './components/RouteHandler';
 
 import {DrawerActions} from '@react-navigation/routers';
-import {NavigationNativeContainer} from '@react-navigation/native';
+import {NavigationContainer} from '@react-navigation/native';
 
-import {navigationRef} from './components/RootNavigation';
+// import {navigationRef} from './components/RootNavigation';
 
 const App = () => {
   const [searchState, setSearchState] = useState('');
@@ -33,9 +34,8 @@ const App = () => {
     SplashScreen.hide();
   }, []);
 
-
   return (
-    <NavigationNativeContainer ref={navigationRef}>
+    <NavigationContainer>
       {/* <Notifications/> */}
       {/* <Header
         leftComponent={{icon: 'menu', color: '#fff'}}
@@ -48,9 +48,9 @@ const App = () => {
         statusBarProps={{translucent: true}}
       /> */}
       <RouteHandler />
-      <StatusBar backgroundColor={'#00600f'} barStyle="light-content" />
+      {/* <StatusBar backgroundColor={'#00600f'} barStyle="light-content" /> */}
       {/* <Spinner color="#fff" type="Bounce" size={80} /> */}
-    </NavigationNativeContainer>
+    </NavigationContainer>
   );
 };
 export default App;

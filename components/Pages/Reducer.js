@@ -58,6 +58,7 @@ export default reducer = (state, action) => {
         return o;
       });
     case 'init':
+      console.log(action.payload)
       return action.payload;
       break;
     default:

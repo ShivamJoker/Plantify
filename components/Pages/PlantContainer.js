@@ -54,14 +54,13 @@ const PlantContainer = ({
     // get the id of snapping point
     // only trigger when user has swipped to left
     if (snapPointId === 'left') {
-      const timeout = setTimeout(() => {
+      const deletionTimeout = setTimeout(() => {
         // we will now delete the plant from server and reducer
+        dispatch({
+          type: 'init',
+          payload: allPlants.filter(o => o.id !== data.id),
+        });
       }, 3000);
-
-      dispatch({
-        type: 'init',
-        payload: allPlants.filter(o => o.id === data.id),
-      });
 
       Snackbar.show({
         text: 'Plant Deleted',
@@ -70,6 +69,8 @@ const PlantContainer = ({
           text: 'UNDO',
           textColor: 'green',
           onPress: () => {
+            // clear the timeout and prevent state from changing
+            clearTimeout(deletionTimeout);
             setContainerStyle({display: 'flex'});
             containerRef.current.snapTo({index: 1});
             LayoutAnimation.configureNext(
@@ -106,16 +107,14 @@ const PlantContainer = ({
         <LinearGradient
           colors={['#0f9b0f', greenColor]}
           style={styles.plantNameContainer}>
+          <FontAwesome5
+            name={'seedling'}
+            color="#FFF"
+            size={100}
+            style={{transform: [{translateY: 20}]}}
+          />
           <View style={styles.plantNameInnerContainer}>
-            <FontAwesome5
-              name={'seedling'}
-              color="#FFF"
-              size={100}
-              style={{transform: [{translateY: 13}]}}
-            />
-            <Text style={{color: '#fff', fontSize: 36, marginLeft: 5}}>
-              {data.name}
-            </Text>
+            <Text style={{color: '#fff', fontSize: 36}}>{data.name}</Text>
             <TouchableOpacity
               onPress={() => setCurrentPlant(index)}
               // we will set the name of plant and then we will search for it
@@ -124,9 +123,10 @@ const PlantContainer = ({
                 position: 'absolute',
                 top: 0,
                 right: 0,
-                width: 40,
-                height: 40,
+                width: 35,
+                height: 35,
                 alignItems: 'center',
+                justifyContent: 'center',
               }}>
               <FontAwesome5 name={'sliders-h'} color="#FFF" size={18} />
             </TouchableOpacity>
@@ -138,7 +138,9 @@ const PlantContainer = ({
             <Text style={styles.infoHeader}>Watering</Text>
             <FontAwesome5 name={'tint'} color="#42a5f5" size={50} />
             <View>
-              <Text style={styles.infoValue}>{formatAMPM(data.time)}</Text>
+              <Text style={styles.infoValue}>
+                {formatAMPM(data.time * 1000)}
+              </Text>
             </View>
             <Button
               title={returnFrequency()}
@@ -187,21 +189,24 @@ var styles = StyleSheet.create({
   },
   plantNameContainer: {
     height: 116,
+    paddingLeft: 16,
     backgroundColor: greenColor,
+    flexDirection: 'row',
+    justifyContent: 'space-between',
     borderTopLeftRadius: 4,
     borderTopRightRadius: 4,
   },
   plantNameInnerContainer: {
     justifyContent: 'center',
+    flex: 1,
     alignItems: 'center',
     flexDirection: 'row',
     // padding: 2,
-    transform: [{translateY: 8}],
   },
   mainContainer: {
     backgroundColor: '#fff',
     borderRadius: 5,
-    margin: 10,
+    marginTop: 10,
     shadowColor: '#000',
     shadowOffset: {
       width: 0,
